@@ -1,5 +1,6 @@
+
 // Enemies our player must avoid
-var Enemy = function(speed) {
+var Enemy = function(speed, y) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -7,7 +8,7 @@ var Enemy = function(speed) {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     this.x = -100;
-    this.y = 60;
+    this.y = y;
     this.speed = speed;
 };
 
@@ -25,6 +26,12 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
+//
+Enemy.prototype.reset = function(speed) {
+  this.x = -100;
+  this.speed = speed;
+}
+
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -36,35 +43,85 @@ var Player = function() {
 };
 
 Player.prototype.update = function () {
-
 };
 
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-Player.prototype.handleInput = function () {
+Player.prototype.handleInput = function (obj) {
+  if(obj == 'left') {
+    if(player.x <= 100) {
 
+    }else{
+      player.x -= 101;
+    }
+  }else if (obj == 'right') {
+    if(player.x >= 400) {
+
+    }else{
+      player.x += 101;
+    }
+  }else if (obj == 'up') {
+    if(player.y < 83) {
+      player.reset();
+    }else{
+      player.y -= 83;
+    }
+  }else if (obj == 'down') {
+    if(player.y >= 380) {
+    }else{
+      player.y += 83;
+    }
+  }
 };
+
+Player.prototype.reset = function() {
+  this.x = 0;
+  this.y = 380;
+}
+
+/*
+* The functions start here
+*
+*/
 
 function randomSpeed() {
   return Math.random() * 100;
 }
 
 function randomEnemy() {
-  return Math.random() * 3;
+  return Math.random() * 5;
+}
+
+function randomRow() {
+  let row;
+  for(let i = 0; i < 3; i++) {
+    if(Math.random() * 180 <= 60) {
+      row = 60;
+    }else if ((Math.random() * 180 > 60) && (Math.random() * 180 <= 120)) {
+      row = 140;
+    }else if (Math.random() * 180 <= 180) {
+      row = 220;
+    }
+  }
+  return row;
 }
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
+function createEnemy() {
+  let bugs = [];
+  for (let i = 0; i < randomEnemy(); i++) {
+    let temp = new Enemy(randomSpeed(), randomRow());
+    bugs.push(temp);
+    temp = null;
+  }
+  return bugs;
+}
 
 var player = new Player();
-var allEnemies = [];
-for (let i = 0; i < randomEnemy(); i++) {
-  let speed = randomSpeed();
-  let newEnemyTemp = new Enemy(speed);
-  allEnemies.push(newEnemyTemp);
-}
+allEnemies = createEnemy();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
