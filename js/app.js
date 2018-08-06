@@ -1,4 +1,3 @@
-
 // Enemies our player must avoid
 var Enemy = function(speed, y) {
     // Variables applied to each of our instances go here,
@@ -87,16 +86,20 @@ Player.prototype.reset = function() {
 */
 
 function randomSpeed() {
-  return Math.random() * 100;
+  let temp = Math.random() * 100;
+  if(temp < 30) {
+    temp = 30;
+  }
+  return temp;
 }
 
-function randomEnemy() {
+function randomNumber() {
   return Math.random() * 5;
 }
 
 function randomRow() {
   let row;
-  for(let i = 0; i < 3; i++) {
+  for(let i = 0; i < 1; i++) {
     if(Math.random() * 180 <= 60) {
       row = 60;
     }else if ((Math.random() * 180 > 60) && (Math.random() * 180 <= 120)) {
@@ -110,18 +113,35 @@ function randomRow() {
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-function createEnemy() {
+debugger;
+function spawn() {
   let bugs = [];
-  for (let i = 0; i < randomEnemy(); i++) {
+  for (let i = 0; i < randomNumber(); i++) {
     let temp = new Enemy(randomSpeed(), randomRow());
     bugs.push(temp);
     temp = null;
   }
-  return bugs;
+  function testPromise() {
+    for (let i = 0; i < randomNumber(); i++) {
+      let temp = new Enemy(randomSpeed(), randomRow());
+      bugs.push(temp);
+      temp = null;
+    }
+  }
+  for(;;) {
+    var p1 = new Promise((resolve, reject) => {
+    setTimeout(function() {
+        resolve(testPromise());
+      },10000);
+    });
+    p1.then()
+    .catch();
+    return bugs;
+  }
 }
 
 var player = new Player();
-allEnemies = createEnemy();
+allEnemies = spawn();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
