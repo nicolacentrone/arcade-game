@@ -54,7 +54,7 @@ Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-Player.prototype.handleInput = function (obj) {
+Player.prototype.handleInput = function(obj) {
   if(obj == 'left') {
     if(player.x <= 100) {
 
@@ -107,11 +107,11 @@ function randomRow() {
   let row;
   for(let i = 0; i < 1; i++) {
     if(Math.random() * 180 <= 60) {
-      row = 60;
+      row = 48;
     }else if ((Math.random() * 180 > 60) && (Math.random() * 180 <= 120)) {
-      row = 140;
+      row = 131;
     }else if (Math.random() * 180 <= 180) {
-      row = 220;
+      row = 214;
     }
   }
   return row;
@@ -119,7 +119,7 @@ function randomRow() {
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-debugger;
+
 
 
 function spawn() {
@@ -143,6 +143,7 @@ function loop() {
 }
 
 loop();
+// debugger;
 setInterval(loop, 1000);
 
 // This listens for key presses and sends the keys to your
