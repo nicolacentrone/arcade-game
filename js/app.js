@@ -31,6 +31,12 @@ Enemy.prototype.reset = function(speed) {
   this.speed = speed;
 }
 
+Enemy.prototype.checkOutside = function() {
+  if(this.x > 500) {
+  return true;
+  }
+}
+
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
@@ -86,15 +92,15 @@ Player.prototype.reset = function() {
 */
 
 function randomSpeed() {
-  let temp = Math.random() * 100;
-  if(temp < 30) {
-    temp = 30;
+  let temp = Math.random() * 500;
+  if(temp <= 100) {
+    temp = 100;
   }
   return temp;
 }
 
 function randomNumber() {
-  return Math.random() * 5;
+  return Math.random() * 3;
 }
 
 function randomRow() {
@@ -114,34 +120,30 @@ function randomRow() {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 debugger;
+
+
 function spawn() {
-  let bugs = [];
   for (let i = 0; i < randomNumber(); i++) {
-    let temp = new Enemy(randomSpeed(), randomRow());
-    bugs.push(temp);
-    temp = null;
-  }
-  function testPromise() {
-    for (let i = 0; i < randomNumber(); i++) {
-      let temp = new Enemy(randomSpeed(), randomRow());
-      bugs.push(temp);
-      temp = null;
-    }
-  }
-  for(;;) {
-    var p1 = new Promise((resolve, reject) => {
-    setTimeout(function() {
-        resolve(testPromise());
-      },10000);
-    });
-    p1.then()
-    .catch();
-    return bugs;
+    allEnemies.push(new Enemy(randomSpeed(), randomRow()));
   }
 }
 
 var player = new Player();
-allEnemies = spawn();
+var allEnemies = [];
+
+function loop() {
+    let p1 = new Promise((resolve, reject) => {
+    resolve(spawn());
+    for (var i = 0; i < allEnemies.length; i++) {
+      if (allEnemies[i].checkOutside() === true) {
+        allEnemies.splice(i,1);
+      }
+    }
+  });
+}
+
+loop();
+setInterval(loop, 1000);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
