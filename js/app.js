@@ -35,7 +35,7 @@ Enemy.prototype.render = function() {
 * @returns {boolean} True if the object is offscreen
 */
 Enemy.prototype.checkOutside = function() {
-  if(this.x > 500) {
+  if (this.x > 500) {
   return true;
   }
 }
@@ -70,27 +70,27 @@ Player.prototype.render = function () {
 * @param {string} obj - The keys sent by the Event Listener 'keyup'
 */
 Player.prototype.handleInput = function(obj) {
-  if(obj === 'left') {
-    if(player.x <= 100) {
+  if (obj === 'left') {
+    if (player.x <= 100) {
 
-    }else{
+    } else {
       player.x -= 101;
     }
   }else if (obj === 'right') {
-    if(player.x >= 400) {
+    if (player.x >= 400) {
 
-    }else{
+    } else {
       player.x += 101;
     }
   }else if (obj === 'up') {
-    if(player.y < 83) {
+    if (player.y < 83) {
       player.win();
-    }else{
+    } else {
       player.y -= 83;
     }
   }else if (obj === 'down') {
-    if(player.y >= 380) {
-    }else{
+    if (player.y >= 380) {
+    } else {
       player.y += 83;
     }
   }
@@ -129,7 +129,7 @@ Player.prototype.win = function() {
 */
 function randomSpeed() {
   let temp = Math.random() * 500;
-  if(temp <= 100) {
+  if (temp <= 100) {
     temp = 100;
   }
   return temp;
@@ -152,11 +152,11 @@ function randomNumber() {
 function randomRow() {
   let row;
   for(let i = 0; i < 1; i++) {
-    if(Math.random() * 180 <= 60) {
+    if (Math.random() * 180 <= 60) {
       row = 48;
-    }else if ((Math.random() * 180 > 60) && (Math.random() * 180 <= 120)) {
+    } else if ((Math.random() * 180 > 60) && (Math.random() * 180 <= 120)) {
       row = 131;
-    }else if (Math.random() * 180 <= 180) {
+    } else if (Math.random() * 180 <= 180) {
       row = 214;
     }
   }
