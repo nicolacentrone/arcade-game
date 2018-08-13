@@ -1,3 +1,7 @@
 body {
     text-align: center;
 }
+
+.status {
+  font: normal normal 400 200%/normal "Quicksand", sans-serif;
+}

@@ -69,7 +69,7 @@ Player.prototype.handleInput = function(obj) {
     }
   }else if (obj == 'up') {
     if(player.y < 83) {
-      player.reset();
+      player.win();
     }else{
       player.y -= 83;
     }
@@ -84,6 +84,18 @@ Player.prototype.handleInput = function(obj) {
 Player.prototype.reset = function() {
   this.x = 0;
   this.y = 380;
+}
+
+Player.prototype.win = function() {
+  this.x = 0;
+  this.y = 380;
+  let newContainer = document.createElement('div');
+  newContainer.setAttribute('class', 'status');
+  document.querySelector('body').appendChild(newContainer);
+  document.querySelector('.status').innerHTML = 'You Win!';
+  setTimeout(function() {
+    newContainer.remove();
+  }, 3000);
 }
 
 /*
